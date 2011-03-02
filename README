@@ -1,0 +1,32 @@
+======================================================================
+Django Publisher
+======================================================================
+
+Any model that is registered with the publisher module gains two new fields (published and publicationDate) and a second Manager. 
+
+The second Manager named 'public' can be used instead of 'objects' to return only those database objects that have been published.  This manager supports filter chaining exactly like the default manager does.
+
+Registration
+============
+import publisher
+
+class MyModel (models.Model):
+    // Define your model
+    
+publisher.register(MyModel)
+
+Use
+===
+items = MyModel.public.all()
+
+items = MyModel.public.get(pk=1)
+
+Purpose
+=======
+This module does nothing that you couldn't achieve with a couple of extra fields and filters. However, if you have a large number of models that share the concept of publication, this module may save you having to add the same filter with model query in every public-facing view.
+
+To install the Django Publisher module, run:
+
+    python setup.py install
+    
+or simply copy the publisher directory on to your python path.
